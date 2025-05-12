@@ -1,7 +1,9 @@
-require("dotenv").config();
-const express = require("express");
-const connectDB = require("./config/db");
-const cors = require("cors");
+import dotenv from 'dotenv';
+import express from 'express';
+import connectDB from './config/db.js';
+import cors from 'cors';
+
+dotenv.config();
 
 const app = express();
 
@@ -10,9 +12,17 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/courts", require("./routes/courtRoutes"));
-// app.use("/api/bookings", require("./routes/bookingRoutes"));
+import authRoutes from './routes/authRoutes.js';
+import courtRoutes from './routes/courtRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
+import reviewRoutes from './routes/reviewRoutes.js';
+
+app.use('/api/auth', authRoutes);
+app.use('/api/courts', courtRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // Connect Database
 connectDB();

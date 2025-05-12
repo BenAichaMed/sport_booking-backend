@@ -1,17 +1,16 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {addCourt,editCourt,deleteCourt,getAllCourts,getSingleCourt} = require('../controllers/courtController');
-const authMiddleware = require('../middleware/authMiddleware');
+import { addCourt, editCourt, deleteCourt, getAllCourts, getSingleCourt, filtredCourts, getOwnerCourts } from '../controllers/courtController.js';
+import authMiddleware from '../middleware/authMiddleware.js'; 
 
-router.post('/add',addCourt);
-router.post('/edit/:courtId',authMiddleware,editCourt);
-router.post('/delete/:courtId', authMiddleware, deleteCourt);
+router.post('/add',authMiddleware, addCourt);
+router.post('/search', filtredCourts);
+router.put('/edit/:courtId',authMiddleware, editCourt);
+router.delete('/delete/:courtId', deleteCourt);
 router.get('/list', getAllCourts);
+router.get('/mycourts',authMiddleware, getOwnerCourts); 
 router.get('/:courtId', getSingleCourt);
 
-
-
-module.exports = router;  
-
+export default router;
 
